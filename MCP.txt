@@ -1,0 +1,26 @@
+User (Browser)
+     │
+     ▼
+┌─────────────────────┐
+│   Angular Frontend  │  ← User types a natural language query
+└─────────────────────┘
+          │  HTTP REST
+          ▼
+┌─────────────────────┐
+│  Spring Boot Backend│  ← Java app, handles business logic
+│   (+ User entity)   │  ← Manages auth, user data, query history
+└─────────────────────┘
+       │         │
+  JPA/SQL    HTTP/SSE
+       │         │
+       ▼         ▼
+┌──────────┐  ┌─────────────┐
+│ Database │  │  MCP Server │  ← Python, bridges Java ↔ Ollama
+└──────────┘  └─────────────┘
+                   │
+              JSON-RPC / HTTP
+                   │
+                   ▼
+            ┌────────────┐
+            │   Ollama   │  ← Local LLM (e.g. llama3, mistral)
+            └────────────┘
