@@ -9,6 +9,19 @@ public class SqlRequest {
     private List<String> columns;
     private String description;
 
+    private  String query;
+
+    public SqlRequest() {
+    }
+
+    public SqlRequest(String requestId, String table, List<String> columns, String description, String query) {
+        this.requestId = requestId;
+        this.table = table;
+        this.columns = columns;
+        this.description = description;
+        this.query = query;
+    }
+
     // ─── Getters & Setters ───────────────────────────────────────────
     public String getRequestId() { return requestId; }
     public void setRequestId(String requestId) { this.requestId = requestId; }
@@ -21,4 +34,12 @@ public class SqlRequest {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
 }

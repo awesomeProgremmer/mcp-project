@@ -1,0 +1,68 @@
+<div class="result-wrapper" [class.animate-in]="animateIn">
+
+  <!-- Loading State -->
+  <div class="loading-card" *ngIf="isLoading">
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+    <p>Processing through Kafka → Ollama...</p>
+  </div>
+
+  <!-- Error State -->
+ <div class="error-card" *ngIf="error && error !== 'null' && !isLoading">
+    <div class="error-icon">✕</div>
+    <div class="error-content">
+      <strong>Query Failed</strong>
+      <p>{{ error }}</p>
+    </div>
+  </div>
+
+  <!-- Result State -->
+  <div class="result-card" *ngIf="result && !isLoading">
+
+    <!-- Meta Info -->
+    <div class="result-meta">
+      <span class="meta-badge">⚡ {{ result.executionTimeMs }}ms</span>
+      <span class="meta-badge" *ngIf="result.rowsAffected !== undefined">
+        {{ result.rowsAffected }} rows
+      </span>
+      <span class="meta-time">{{ result.timestamp | date:'HH:mm:ss' }}</span>
+    </div>
+
+    <!-- Generated SQL -->
+    <div class="sql-block">
+      <div class="sql-header">
+        <span class="sql-label">Generated SQL</span>
+        <button class="copy-btn" (click)="copySQL()">
+          {{ copied ? '✓ Copied' : 'Copy' }}
+        </button>
+      </div>
+      <pre class="sql-code"><code>{{ result.generatedSql }}</code></pre>
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-scroll" *ngIf="result.data?.length">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th *ngFor="let header of tableHeaders">{{ header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of result.data">
+            <td *ngFor="let header of tableHeaders">
+              {{ row[header] ?? '—' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty Result -->
+    <div class="empty-data" *ngIf="result.data?.length === 0">
+      Query executed — no rows returned.
+    </div>
+
+  </div>
+
+</div>

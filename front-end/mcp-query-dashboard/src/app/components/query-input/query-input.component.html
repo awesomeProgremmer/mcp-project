@@ -1,0 +1,84 @@
+<section class="query-section">
+
+  <div class="query-header">
+    <h1 class="query-title">Ask in plain English</h1>
+    <p class="query-subtitle">Powered by Ollama → Kafka → Spring Boot</p>
+  </div>
+
+  <!-- Table Name -->
+  <div class="input-group">
+    <label class="input-label">Table Name</label>
+    <input
+      [formControl]="tableControl"
+      class="text-input"
+      placeholder="e.g. users"/>
+    <span class="error-hint"
+      *ngIf="tableControl.touched && tableControl.invalid">
+      Table name is required
+    </span>
+  </div>
+
+  <!-- Dynamic Columns -->
+  <div class="input-group">
+    <label class="input-label">Columns</label>
+
+    <!-- Column Tags -->
+    <div class="column-tags">
+      <span class="tag"
+        *ngFor="let col of columns; let i = index">
+        {{ col }}
+        <button class="tag-remove"
+          (click)="removeColumn(i)">✕</button>
+      </span>
+      <span class="no-columns"
+        *ngIf="columns.length === 0">
+        No columns added yet
+      </span>
+    </div>
+
+    <!-- Add Column Input -->
+    <div class="column-add">
+      <input
+        [formControl]="newColumnControl"
+        class="text-input"
+        placeholder="e.g. id, name, email"
+        (keydown.enter)="addColumn()"/>
+      <button class="add-btn"
+        (click)="addColumn()">
+        + Add
+      </button>
+    </div>
+    <span class="error-hint"
+      *ngIf="columns.length === 0">
+      Add at least one column
+    </span>
+  </div>
+
+  <!-- Query Input -->
+  <div class="query-box" [class.loading]="isLoading">
+    <textarea
+      [formControl]="queryControl"
+      class="query-textarea"
+      placeholder="e.g. Show all users created this month"
+      rows="3"
+      (keydown)="onKeydown($event)">
+    </textarea>
+
+    <div class="query-footer">
+      <span class="char-count" [class.warn]="charCount > 450">
+        {{ charCount }}/500
+      </span>
+      <button
+        class="submit-btn"
+        (click)="onSubmit()"
+        [disabled]="queryControl.invalid ||
+                    tableControl.invalid ||
+                    columns.length === 0 ||
+                    isLoading">
+        <span *ngIf="!isLoading">Run Query</span>
+        <span *ngIf="isLoading">Loading...</span>
+      </button>
+    </div>
+  </div>
+
+</section>

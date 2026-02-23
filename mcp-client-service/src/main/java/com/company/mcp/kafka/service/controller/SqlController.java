@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sql")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SqlController {
 
     private final SqlRequestProducer producer;
@@ -16,7 +17,13 @@ public class SqlController {
 
     @PostMapping("/generate")
     public String sendRequest(@RequestBody SqlRequest request) {
-        producer.sendSqlRequest(request);
-        return "SQL request sent to Kafka";
+        try {
+            // ← changed: now waits for Python response
+            String sql = producer.sendAndWait(request);
+            System.out.println("📤 Sending to Angular: " + sql);
+            return sql;
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
     }
 }

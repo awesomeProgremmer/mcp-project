@@ -49,8 +49,8 @@ def start_kafka_consumer():
     consumer = KafkaConsumer(
         CONSUME_TOPIC,
         bootstrap_servers=KAFKA_BOOTSTRAP,
-        auto_offset_reset="earliest",
-        group_id="fastapi-group",
+        auto_offset_reset="latest",
+        group_id="fastapi-group-v2",
         value_deserializer=lambda v: json.loads(v.decode("utf-8"))
     )
 

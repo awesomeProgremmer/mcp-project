@@ -1,0 +1,41 @@
+<section class="history-section" *ngIf="history.length > 0">
+
+  <div class="history-header">
+    <h2 class="history-title">
+      Query History
+      <span class="count">{{ history.length }}</span>
+    </h2>
+    <button class="clear-btn" (click)="clearHistory.emit()">
+      Clear all
+    </button>
+  </div>
+
+  <div class="history-list">
+    <div
+      *ngFor="let item of history; trackBy: trackById"
+      class="history-item"
+      [class.expanded]="expandedId === item.id">
+
+      <div class="history-item-header" (click)="toggleExpand(item.id)">
+        <span class="history-status" [class.success]="item.success">
+          {{ item.success ? '✓' : '✕' }}
+        </span>
+        <span class="history-query">{{ item.query }}</span>
+        <span class="history-time">{{ item.timestamp | date:'HH:mm' }}</span>
+        <button class="replay-btn"
+          (click)="replay(item); $event.stopPropagation()">
+          ↺ Replay
+        </button>
+        <span class="expand-arrow">
+          {{ expandedId === item.id ? '▲' : '▼' }}
+        </span>
+      </div>
+
+      <div class="history-item-body" *ngIf="expandedId === item.id">
+        <pre class="history-sql"><code>{{ item.sql }}</code></pre>
+      </div>
+
+    </div>
+  </div>
+
+</section>
