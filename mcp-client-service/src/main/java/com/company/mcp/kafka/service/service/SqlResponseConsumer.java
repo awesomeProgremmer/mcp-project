@@ -27,8 +27,8 @@ public class SqlResponseConsumer {
             Map<String, Object> response = objectMapper.readValue(message, Map.class);
             String requestId = (String) response.get("requestId");
             String sql = (String) response.get("sql");
-            System.out.println("📩 RequestId: " + requestId); // ← ADD
-            System.out.println("📩 SQL: " + sql);             // ← ADD
+            System.out.println(" RequestId: " + requestId); // ← ADD
+            System.out.println(" SQL: " + sql);             // ← ADD
             System.out.println("Received SQL response for: " + requestId);
             System.out.println("SQL: " + sql);
 

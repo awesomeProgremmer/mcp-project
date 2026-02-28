@@ -15,6 +15,8 @@ export class QueryInputComponent implements OnInit, OnDestroy {
 
   @Input() isLoading: boolean = false;
  @Output() querySubmitted = new EventEmitter<QueryRequest>();
+ @Input() placeholderText: string = 'e.g. Show all orders from last week';
+ @Output() charCountChanged = new EventEmitter<number>();
 
   queryControl = new FormControl('', [
     Validators.required,
@@ -62,6 +64,7 @@ export class QueryInputComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(value => {
       this.charCount = value?.length || 0;
+       this.charCountChanged.emit(this.charCount); 
     });
   }
 
@@ -90,6 +93,8 @@ onSubmit(): void {
       this.onSubmit();
     }
   }
+
+
 
   ngOnDestroy(): void {
     this.destroy$.next();

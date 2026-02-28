@@ -107,6 +107,14 @@ export class AppComponent implements OnInit, OnDestroy {
     } catch { /* storage full */ }
   }
 
+  currentCharCount = 0;
+
+// ADD this method
+onCharCountChanged(count: number): void {
+  this.currentCharCount = count;
+  console.log('Parent received char count:', count);
+}
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

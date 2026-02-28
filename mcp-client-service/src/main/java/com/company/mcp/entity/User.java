@@ -29,6 +29,15 @@ public class User {
 
     private  String password;
 
+    private  Integer age;
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
     @ManyToMany
     @JoinTable(
@@ -39,15 +48,17 @@ public class User {
 
     private Set<Channel> channels = new HashSet<>();
 
-    public User() {
+    public User(Integer age) {
+        this.age = age;
     }
 
-    public User(Long id, String name, String email, String userName, String password) {
+    public User(Long id, String name, String email, String userName, String password, Integer age) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.userName = userName;
         this.password = password;
+        this.age = age;
     }
 
     public Long getId() {

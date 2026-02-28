@@ -59,7 +59,7 @@
     <textarea
       [formControl]="queryControl"
       class="query-textarea"
-      placeholder="e.g. Show all users created this month"
+      [placeholder]="placeholderText"
       rows="3"
       (keydown)="onKeydown($event)">
     </textarea>

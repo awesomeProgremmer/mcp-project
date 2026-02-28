@@ -9,26 +9,27 @@
 
   <main class="app-main">
 
-    <!-- Step 1: User fills table, columns, query -->
     <app-query-input
-      [isLoading]="isLoading"
-      (querySubmitted)="onQuerySubmit($event)">
-    </app-query-input>
+  [isLoading]="isLoading"
+  [placeholderText]="'Find users who signed up today'"
+   (charCountChanged)="onCharCountChanged($event)"
+  (querySubmitted)="onQuerySubmit($event)">
+</app-query-input>
+<p style="color: cyan; font-family: monospace; padding: 10px;">
+      Parent sees: {{ currentCharCount }} characters typed
+    </p>
 
-    <!-- Step 2: Show result or error -->
-    <app-result-display
-      [result]="currentResult"
-      [error]="error"
-      [isLoading]="isLoading">
-    </app-result-display>
+<app-result-display
+  [result]="currentResult"
+  [error]="error"
+  [isLoading]="isLoading">
+</app-result-display>
 
-    <!-- Step 3: Show history -->
-    <app-history-panel
-      [history]="queryHistory"
-      (replayQuery)="onQuerySubmit($event)"
-      (clearHistory)="onClearHistory()">
-    </app-history-panel>
-
+<app-history-panel
+  [history]="queryHistory"
+  (replayQuery)="onReplayQuery($event)"
+  (clearHistory)="onClearHistory()">
+</app-history-panel>
   </main>
 
 </div>
