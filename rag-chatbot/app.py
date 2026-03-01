@@ -9,7 +9,7 @@ import torch
 
 # ── Page config ──────────────────────────────────────────────
 st.set_page_config(page_title="RAG Chatbot", layout="centered")
-st.title("🤖 RAG Chatbot")
+st.title(" RAG Chatbot")
 st.caption("Ask anything from your PDF document")
 
 # ── Load vectorstore & LLM (cached so it only loads once) ────
