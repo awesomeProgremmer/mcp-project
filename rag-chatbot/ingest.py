@@ -21,4 +21,4 @@ embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 vectorstore = FAISS.from_documents(chunks, embeddings)
 vectorstore.save_local("faiss_index")
 
-print("✅ Done! Vector store saved to faiss_index/")
+print(" Done! Vector store saved to faiss_index/")

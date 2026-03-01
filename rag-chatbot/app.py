@@ -8,7 +8,7 @@ from transformers import pipeline
 import torch
 
 # ── Page config ──────────────────────────────────────────────
-st.set_page_config(page_title="RAG Chatbot", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="RAG Chatbot", layout="centered")
 st.title("🤖 RAG Chatbot")
 st.caption("Ask anything from your PDF document")
 
@@ -24,8 +24,8 @@ def load_vectorstore():
 @st.cache_resource
 def load_llm():
     pipe = pipeline(
-        "text-generation",                              # ✅ fixed task
-        model="TinyLlama/TinyLlama-1.1B-Chat-v1.0",   # ✅ small free model
+        "text-generation",
+        model="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
         max_new_tokens=256,
         do_sample=False,
         device=0 if torch.cuda.is_available() else -1,
@@ -77,7 +77,7 @@ if user_input := st.chat_input("Ask a question about your PDF..."):
 
         st.markdown(answer)
 
-        with st.expander("📄 Source chunks used"):
+        with st.expander("Source chunks used"):
             docs = retriever.invoke(user_input)
             for i, doc in enumerate(docs):
                 st.markdown(f"**Chunk {i+1}:**")
